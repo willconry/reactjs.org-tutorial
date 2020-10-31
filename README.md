@@ -1,2 +1,2 @@
 # React JS TicTacToe game
-From react
+From reactjs.org
