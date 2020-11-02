@@ -25,10 +25,7 @@ class Board extends React.Component {
     for (let i = 0; i < 3; i++) {
       row = row.concat(this.renderSquare(i+3*r));
     }
-    return (
-      <div className="board-row">
-        {row}
-      </div>);
+    return (<div className="board-row">{row}</div>);
   }
 
   render() {
@@ -36,10 +33,7 @@ class Board extends React.Component {
     for (let i = 0; i < 3; i++) {
       board = board.concat(this.renderRow(i));
     }
-    return (
-      <div>
-        {board}
-      </div>
+    return (<div>{board}</div>
     );
   }
 }
@@ -56,6 +50,7 @@ class Game extends React.Component {
       ],
       stepNumber: 0,
       xIsNext: true,
+      sortAscending: true,
     };
   }
 
@@ -91,7 +86,7 @@ class Game extends React.Component {
     const current = history[this.state.stepNumber];
     const winner = calculateWinner(current.squares);
 
-    const moves = history.map((step, move) => {
+    var moves = history.map((step, move) => {
       const desc = move ?
         'Go to move #' + move + " (" + step.lastMove%3 + ", " + Math.floor(step.lastMove/3) + ") ":
         'Go to game start';
@@ -105,7 +100,9 @@ class Game extends React.Component {
       );
     });
 
-    let status;
+    if (!this.state.sortAscending) moves = moves.reverse();
+
+    var status;
     if (winner) {
       status = "Winner: " + winner;
     } else {
@@ -122,6 +119,9 @@ class Game extends React.Component {
         </div>
         <div className="game-info">
           <div>{status}</div>
+          <button onClick={() => this.setState({sortAscending: !this.state.sortAscending})}>
+            Sort History: {this.state.sortAscending ? "Ascending" : "Descending"}
+          </button>
           <ol>{moves}</ol>
         </div>
       </div>
