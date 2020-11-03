@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import './index.css';
 
 function Square(props) {
-  // const style = props.isBold ? {fontWeight:'bold'} : {fontWeight:'normal'};
   return (
     <button className="square" onClick={props.onClick} style={props.style}>
       {props.value}
@@ -119,6 +118,7 @@ class Game extends React.Component {
     var status;
     if (winner) {
       status = "Winner: " + winner;
+    } else if (this.state.stepNumber == 9) { status = "Draw Game";
     } else {
       status = "Next player: " + (this.state.xIsNext ? "X" : "O");
     }
